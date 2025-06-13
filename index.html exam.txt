@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Project Portfolio</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8; /* Light blue-gray background */
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            padding: 2rem;
+            box-sizing: border-box;
+        }
+        .container {
+            background-color: #ffffff;
+            border-radius: 1rem; /* More rounded corners */
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            padding: 2.5rem; /* Increased padding */
+            max-width: 960px; /* Wider container */
+            width: 100%;
+        }
+        .section-header {
+            background-color: #1a73e8; /* Google Blue */
+            color: #ffffff;
+            padding: 1rem 1.5rem; /* Adjusted padding */
+            border-radius: 0.75rem; /* Rounded corners for headers */
+            margin-bottom: 1.5rem;
+            font-size: 1.25rem; /* Larger font size */
+            font-weight: 600;
+        }
+        .task-button {
+            background-color: #1a73e8; /* Google Blue */
+            color: #ffffff;
+            padding: 0.75rem 1.25rem; /* Adjusted padding */
+            border-radius: 0.75rem; /* Rounded corners */
+            font-weight: 500;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .task-button:hover {
+            background-color: #155bb5; /* Darker blue on hover */
+            transform: translateY(-2px);
+        }
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.6); /* Darker overlay */
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-content {
+            background-color: #ffffff;
+            margin: auto;
+            padding: 2.5rem; /* More padding */
+            border-radius: 1rem; /* Rounded corners */
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.25);
+            max-width: 700px; /* Wider modal */
+            width: 90%;
+            position: relative;
+            animation: fadeInScale 0.3s ease-out forwards;
+        }
+        @keyframes fadeInScale {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        .close-button {
+            color: #aaa;
+            font-size: 2rem;
+            font-weight: bold;
+            position: absolute;
+            top: 1rem;
+            right: 1.5rem;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+        .close-button:hover,
+        .close-button:focus {
+            color: #333;
+        }
+        input[type="text"],
+        input[type="number"],
+        select {
+            border: 1px solid #ccc;
+            padding: 0.6rem 0.8rem;
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        button.action-button {
+            background-color: #4CAF50; /* Green */
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s ease;
+        }
+        button.action-button:hover {
+            background-color: #45a049;
+        }
+        .result-box {
+            background-color: #e2e8f0; /* Light gray-blue */
+            padding: 1rem;
+            border-radius: 0.75rem;
+            min-height: 50px;
+            overflow-wrap: break-word;
+            word-break: break-all;
+            margin-top: 1rem;
+            font-family: monospace;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header Information -->
+        <div class="mb-6">
+            <p class="text-xl font-semibold mb-2">STUDENT NAME : <span class="font-normal">Meghna Rasheed</span></p>
+            <p class="text-xl font-semibold mb-2">CURRENT DATE : <span class="font-normal" id="current-date"></span></p>
+            <p class="text-xl font-semibold">SUBJECT NAME : <span class="font-normal">Web Technology</span></p>
+        </div>
+
+        <!-- Information About Me -->
+        <div class="section-header">INFORMATION ABOUT ME :</div>
+        <p class="mb-6 text-gray-700 leading-relaxed">
+            Hello! I am Meghna Rasheed, 1st semester Softeware Engineering student in ISMA University. 
+        </p>
+
+        <!-- Task Details -->
+        <div class="section-header">Task Details :</div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+            <button class="task-button" onclick="openModal('task1-modal')">Task 1</button>
+            <button class="task-button" onclick="openModal('task2-modal')">Task 2</button>
+            <button class="task-button" onclick="openModal('task3-modal')">Task 3</button>
+            <button class="task-button" onclick="openModal('task4-modal')">Task 4</button>
+            <button class="task-button" onclick="openModal('task5-modal')">Task 5</button>
+            <button class="task-button" onclick="openModal('task6-modal')">Task 6</button>
+            <button class="task-button" onclick="openModal('task7-modal')">Task 7</button>
+            <button class="task-button" onclick="openModal('task8-modal')">Task 8</button>
+            <button class="task-button" onclick="openModal('task9-modal')">Task 9</button>
+            <button class="task-button" onclick="openModal('task10-modal')">Task 10</button>
+        </div>
+
+        <!-- Mini Project Section -->
+        <div class="section-header">Mini project Title : <span class="font-normal">Med-Mate https://meghna030.github.io/med-mate/ </span></div>
+        <div class="mb-6">
+            <h3 class="text-xl font-semibold mb-2 text-gray-800">Information :</h3>
+            <p class="text-gray-700 leading-relaxed">Prepare a concise presentation covering the following points :</p>
+            <ul class="list-disc list-inside text-gray-700 mt-2 pl-4">
+                <li><span class="font-semibold">1) Problem Statement:</span> Describe the problem your project addresses.</li>
+                <p class="ml-4">The problem that Med-Mate aims to solve is that millions of people miss medication doses, which can lead to health risks. This issue is particularly relevant for the elderly and chronically ill.</p>
+                <li><span class="font-semibold">2) Objective:</span> Explain the purpose of your project.</li>
+                <p class="ml-4">The objective of the Med-Mate webpage is to serve as a web-based application designed to help patients, the elderly, and caregivers manage medications effectively. It aims to achieve this by providing medication reminders, tracking medicine supplies, and offering details about local pharmacies. The platform is particularly useful for the elderly and those with chronic illnesses.</p>
+                <li><span class="font-semibold">3) Goal:</span> Define the end goals and intended outcomes of your project.</li>
+                <p class="ml-4">Med-Mate is a web-based application designed to address the critical issue of missed medication doses, which poses significant health risks, particularly for the elderly and chronically ill. The primary goal of this platform is to simplify medication management for patients, the elderly, and caregivers. It aims to achieve this by offering a comprehensive set of features, including smart medication reminders delivered via email, SMS, or web notifications, tracking of medicine supplies, and alerts for refills. Additionally, Med-Mate helps users locate nearby pharmacies and their offers, stores individual medical histories, and allows for the export of health reports to share with doctors or family. Beyond its core functionality, the project seeks to be commercially viable through monetization strategies such as premium memberships, pharmacy advertisements, and affiliate links. Ultimately, Med-Mate aspires to be a powerful blend of technology and social benefit, providing a practical solution to a real-world health issue while also serving as an excellent learning exercise in full-stack development.</p>
+                <li><span class="font-semibold">4) Result/Output:</span> Outline the expected or actual results.</li>
+                <p class="ml-4">Med-Mate is a web-based application designed to help individuals manage their medication routines effectively. Its primary goal is to address the common problem of missed medication doses, which can lead to significant health risks, especially for the elderly and those with chronic illnesses. The platform offers a suite of features including smart reminders sent via email, SMS, or web notifications to ensure timely medication administration, as well as tools to track medicine inventory and alert users when refills are needed. Furthermore, Med-Mate provides a local pharmacy finder, stores users' medical histories, and allows for the export of health reports to share with healthcare providers. The project also outlines monetization strategies such as premium memberships for advanced features, advertising opportunities for pharmacies, and affiliate links to online pharmacies. Ultimately, Med-Mate aims to be a socially responsible and commercially viable solution that leverages technology to promote better health outcomes, while also serving as a practical learning experience in full-stack development.</p>
+                <li><span class="font-semibold">5) Technology Used:</span> List the tools, languages, or frameworks you used.</li>
+                <p class="ml-4">The Med-Mate web application primarily utilizes HTML and CSS for structuring and styling the frontend, with JavaScript handling dynamic interactions and reminders. For backend logic, it proposes using C++ with CGI to securely store schedules, reminders, and user data. Alternatively, Java with Spring Boot or Servlets could be used for REST APIs or a full backend server. A relational database like MySQL or SQLite is employed for storing prescriptions, reminders, and inventory. Additionally, SMTP integration is used for sending reminder emails, and an SMS API, such as Twilio, is incorporated for text alerts.</p>
+                <li><span class="font-semibold">6) User Audience:</span> Identify the target audience or users of your project.</li>
+                <p class="ml-4">The Med-Mate webpage is primarily designed for patients, the elderly, and caregivers. It is also specifically very useful for those who are chronically ill.</p>
+                <li><span class="font-semibold">7) Impact on Society:</span> Discuss how your project could benefit society or people in general.</li>
+                <p class="ml-4">Med-Mate has a significant positive impact on society by addressing a crucial public health issue: missed or mismanaged medication. Millions of people often forget to take their prescribed doses, which can lead to severe health risks. By providing smart reminders via email, SMS, or web notifications, Med-Mate directly helps users maintain their health and adhere to their treatment plans. This is particularly beneficial for vulnerable populations such as the elderly and chronically ill, who may struggle with remembering complex medication schedules. The application's features, like inventory tracking and refill alerts, also contribute to better medication adherence and prevent potential health complications due to lack of supply. Furthermore, by offering a caregiver mode, Med-Mate extends its benefits to families and nurses, enabling them to manage medication reminders for others, thereby supporting a broader network of care. This blend of technology and social benefit makes Med-Mate a valuable tool for improving public health outcomes and fostering greater independence for individuals managing their health.</p>
+            </ul>
+        </div>
+
+        <!-- Screenshots Section -->
+        <div class="section-header">SCREENSHOTS</div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <img src="https://placehold.co/400x300/e2e8f0/333?text=Screenshot+1" alt="Screenshot 1" class="w-full h-auto rounded-lg shadow-md">
+            <img src="https://placehold.co/400x300/e2e8f0/333?text=Screenshot+2" alt="Screenshot 2" class="w-full h-auto rounded-lg shadow-md">
+            <!-- Add more screenshots as needed -->
+        </div>
+
+        <!-- Modals for each Task Output -->
+
+        <!-- Task 1 Modal: Sum, Difference, Multiplication, Division -->
+        <div id="task1-modal" class="modal">
+            <div class="modal-content">
+                <span class="close-button" onclick="closeModal('task1-modal')">&times;</span>
+                <h2 class="text-2xl font-bold mb-4 text-gray-800">Task 1: Basic Calculator</h2>
+                <p class="mb-4 text-gray-700">Enter two numbers and choose an operation.</p>
+                <input type="number" id="num1" placeholder="Enter first number">
+                <input type="number" id="num2" placeholder="Enter second number">
+                <select id="operation">
+                    <option value="sum">Sum</option>
+                    <option value="difference">Difference</option>
+                    <option value="multiplication">Multiplication</option>
+                    <option value="division">Division</option>
+                </select>
+                <button class="action-button" onclick="performCalculation()">Calculate</button>
+                <div class="result-box mt-4">
+                    <p id="task1-result">Result will appear here.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Task 2 Modal: Work with Arrays -->
+        <div id="task2-modal" class="modal">
+            <div class="modal-content">
+                <span class="close-button" onclick="closeModal('task2-modal')">&times;</span>
+                <h2 class="text-2xl font-bold mb-4 text-gray-800">Task 2: Work with Arrays in JavaScript</h2>
+                <p class="mb-4 text-gray-700">Demonstrates basic array operations. The default array is [10, 20, 30, 40, 50].</p>
+                <button class="action-button" onclick="showArrayOperations('task2-result')">Show Operations</button>
+                <div class="result-box mt-4">
+                    <p id="task2-result">Results will appear here.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Task 3 Modal: Apply Map Function (Double Elements) -->
+        <div id="task3-modal" class="modal">
+            <div class="modal-content">
+                <span class="close-button" onclick="closeModal('task3-modal')">&times;</span>
+                <h2 class="text-2xl font-bold mb-4 text-gray-800">Task 3: Double Array Elements with Map</h2>
+                <p class="mb-4 text-gray-700">Applies the map function to double each element in the default array [1, 2, 3, 4, 5].</p>
+                <button class="action-button" onclick="doubleArrayElements('task3-result')">Double Elements</button>
+                <div class="result-box mt-4">
+                    <p id="task3-result">Result will appear here.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Task 4 Modal: Find 10th Character from Entered Array -->
+        <div id="task4-modal" class="modal">
+            <div class="modal-content">
+                <span class="close-button" onclick="closeModal('task4-modal')">&times;</span>
+                <h2 class="text-2xl font-bold mb-4 text-gray-800">Task 4: Find 10th Character</h2>
+                <p class="mb-4 text-gray-700">Enter a comma-separated list of characters (e.g., a,b,c,...). The task will find the 10th character if it exists.</p>
+                <input type="text" id="charArrayInput" placeholder="Enter characters (e.g., a,b,c,d,e,f,g,h,i,j,k)">
+                <button class="action-button" onclick="findTenthChar()">Find 10th Char</button>
+                <div class="result-box mt-4">
+                    <p id="task4-result">Result will appear here.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Task 5 Modal: Find Last Element from Given Array -->
+        <div id="task5-modal" class="modal">
+            <div class="modal-content">
+                <span class="close-button" onclick="closeModal('task5-modal')">&times;</span>
+                <h2 class="text-2xl font-bold mb-4 text-gray-800">Task 5: Find Last Array Element</h2>
+                <p class="mb-4 text-gray-700">Enter a comma-separated list of values (e.g., apple,banana,cherry).</p>
+                <input type="text" id="lastElementArrayInput" placeholder="Enter elements (e.g., red,green,blue)">
+                <button class="action-button" onclick="findLastElement()">Find Last Element</button>
+                <div class="result-box mt-4">
+                    <p id="task5-result">Result will appear here.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Task 6 Modal: Allow Only 10 Digits in Text Field -->
+        <div id="task6-modal" class="modal">
+            <div class="modal-content">
+                <span class="close-button" onclick="closeModal('task6-modal')">&times;</span>
+                <h2 class="text-2xl font-bold mb-4 text-gray-800">Task 6: 10-Digit Input Validation</h2>
+                <p class="mb-4 text-gray-700">Enter a number. Only exactly 10 digits are allowed.</p>
+                <input type="text" id="tenDigitInput" maxlength="10" oninput="validateTenDigits()" placeholder="Enter exactly 10 digits">
+                <div class="result-box mt-4">
+                    <p id="task6-result">Type to see validation message.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Task 7 Modal: Find Specific Words and Repeated Characters -->
+        <div id="task7-modal" class="modal">
+            <div class="modal-content">
+                <span class="close-button" onclick="closeModal('task7-modal')">&times;</span>
+                <h2 class="text-2xl font-bold mb-4 text-gray-800">Task 7: Word & Character Analysis</h2>
+                <p class="mb-4 text-gray-700">Enter a comma-separated array of words and a specific word to search for.</p>
+                <input type="text" id="wordArrayInput" placeholder="Enter words (e.g., hello,world,apple,hello)">
+                <input type="text" id="searchWordInput" placeholder="Enter word to search (e.g., hello)">
+                <button class="action-button" onclick="analyzeWordsAndCharacters()">Analyze</button>
+                <div class="result-box mt-4">
+                    <p id="task7-result">Results will appear here.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Task 8 Modal: Find Number of Vowels in Array of Characters -->
+        <div id="task8-modal" class="modal">
+            <div class="modal-content">
+                <span class="close-button" onclick="closeModal('task8-modal')">&times;</span>
+                <h2 class="text-2xl font-bold mb-4 text-gray-800">Task 8: Vowel Counter</h2>
+                <p class="mb-4 text-gray-700">Enter a comma-separated list of characters (e.g., a,e,i,o,u,b,c).</p>
+                <input type="text" id="vowelArrayInput" placeholder="Enter characters (e.g., programming,example)">
+                <button class="action-button" onclick="countVowels()">Count Vowels</button>
+                <div class="result-box mt-4">
+                    <p id="task8-result">Result will appear here.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Task 9 Modal: Work with Arrays (Separate) -->
+        <div id="task9-modal" class="modal">
+            <div class="modal-content">
+                <span class="close-button" onclick="closeModal('task9-modal')">&times;</span>
+                <h2 class="text-2xl font-bold mb-4 text-gray-800">Task 9: Work with Arrays in JavaScript</h2>
+                <p class="mb-4 text-gray-700">Demonstrates basic array operations. The default array is [10, 20, 30, 40, 50].</p>
+                <button class="action-button" onclick="showArrayOperations('task9-result')">Show Operations</button>
+                <div class="result-box mt-4">
+                    <p id="task9-result">Results will appear here.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Task 10 Modal: Apply Map Function (Double Elements) (Separate) -->
+        <div id="task10-modal" class="modal">
+            <div class="modal-content">
+                <span class="close-button" onclick="closeModal('task10-modal')">&times;</span>
+                <h2 class="text-2xl font-bold mb-4 text-gray-800">Task 10: Double Array Elements with Map</h2>
+                <p class="mb-4 text-gray-700">Applies the map function to double each element in the default array [1, 2, 3, 4, 5].</p>
+                <button class="action-button" onclick="doubleArrayElements('task10-result')">Double Elements</button>
+                <div class="result-box mt-4">
+                    <p id="task10-result">Result will appear here.</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Set current date
+        document.getElementById('current-date').innerText = new Date().toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        });
+
+        // --- Modal Functions ---
+        function openModal(modalId) {
+            document.getElementById(modalId).style.display = 'flex'; // Use flex to center content
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+            // Clear inputs and results when closing the modal
+            if (modalId === 'task1-modal') {
+                document.getElementById('num1').value = '';
+                document.getElementById('num2').value = '';
+                document.getElementById('task1-result').innerText = 'Result will appear here.';
+            } else if (modalId === 'task2-modal') {
+                document.getElementById('task2-result').innerText = 'Results will appear here.';
+            } else if (modalId === 'task3-modal') {
+                document.getElementById('task3-result').innerText = 'Result will appear here.';
+            } else if (modalId === 'task4-modal') {
+                document.getElementById('charArrayInput').value = '';
+                document.getElementById('task4-result').innerText = 'Result will appear here.';
+            } else if (modalId === 'task5-modal') {
+                document.getElementById('lastElementArrayInput').value = '';
+                document.getElementById('task5-result').innerText = 'Result will appear here.';
+            } else if (modalId === 'task6-modal') {
+                document.getElementById('tenDigitInput').value = '';
+                document.getElementById('task6-result').innerText = 'Type to see validation message.';
+            } else if (modalId === 'task7-modal') {
+                document.getElementById('wordArrayInput').value = '';
+                document.getElementById('searchWordInput').value = '';
+                document.getElementById('task7-result').innerText = 'Results will appear here.';
+            } else if (modalId === 'task8-modal') {
+                document.getElementById('vowelArrayInput').value = '';
+                document.getElementById('task8-result').innerText = 'Result will appear here.';
+            } else if (modalId === 'task9-modal') { // New: Clear for Task 9
+                document.getElementById('task9-result').innerText = 'Results will appear here.';
+            } else if (modalId === 'task10-modal') { // New: Clear for Task 10
+                document.getElementById('task10-result').innerText = 'Result will appear here.';
+            }
+        }
+
+        // Close modal if user clicks outside of it
+        window.onclick = function(event) {
+            const modals = document.querySelectorAll('.modal');
+            modals.forEach(modal => {
+                if (event.target == modal) {
+                    closeModal(modal.id);
+                }
+            });
+        }
+
+        // --- Task Implementations ---
+
+        /**
+         * Task 1: Function for sum, difference, multiplication, division.
+         * Takes two numbers and an operation choice.
+         */
+        function performCalculation() {
+            const num1 = parseFloat(document.getElementById('num1').value);
+            const num2 = parseFloat(document.getElementById('num2').value);
+            const operation = document.getElementById('operation').value;
+            let result;
+
+            if (isNaN(num1) || isNaN(num2)) {
+                document.getElementById('task1-result').innerText = 'Please enter valid numbers.';
+                return;
+            }
+
+            switch (operation) {
+                case 'sum':
+                    result = num1 + num2;
+                    break;
+                case 'difference':
+                    result = num1 - num2;
+                    break;
+                case 'multiplication':
+                    result = num1 * num2;
+                    break;
+                case 'division':
+                    if (num2 === 0) {
+                        result = 'Cannot divide by zero!';
+                    } else {
+                        result = num1 / num2;
+                    }
+                    break;
+                default:
+                    result = 'Invalid operation.';
+            }
+            document.getElementById('task1-result').innerText = Result: ${result};
+        }
+
+        /**
+         * Task 2 & 9: Work with arrays in JavaScript to store and manage collections of data.
+         * Demonstrates array creation, access, push, pop, and length.
+         * @param {string} resultElementId The ID of the element to display the result.
+         */
+        function showArrayOperations(resultElementId) {
+            const myArray = [10, 20, 30, 40, 50];
+            let output = Original Array: [${myArray.join(', ')}]<br>;
+
+            // Accessing elements
+            output += First element: ${myArray[0]}<br>;
+            output += Third element: ${myArray[2]}<br>;
+
+            // Array length
+            output += Array length: ${myArray.length}<br>;
+
+            // Adding an element (push)
+            myArray.push(60);
+            output += After push(60): [${myArray.join(', ')}]<br>;
+
+            // Removing an element (pop)
+            const poppedElement = myArray.pop();
+            output += Popped element: ${poppedElement}<br>;
+            output += Array after pop: [${myArray.join(', ')}]<br>;
+
+            // Iterating through array
+            output += `Iterating (forEach): `;
+            myArray.forEach(item => {
+                output += `${item} `;
+            });
+            output += <br>;
+
+            document.getElementById(resultElementId).innerHTML = output;
+        }
+
+        /**
+         * Task 3 & 10: Apply the map function to double each element in an array.
+         * @param {string} resultElementId The ID of the element to display the result.
+         */
+        function doubleArrayElements(resultElementId) {
+            const originalArray = [1, 2, 3, 4, 5];
+            // Use map to create a new array with doubled values
+            const doubledArray = originalArray.map(num => num * 2);
+
+            let output = Original Array: [${originalArray.join(', ')}]<br>;
+            output += Doubled Array (using map): [${doubledArray.join(', ')}];
+
+            document.getElementById(resultElementId).innerHTML = output;
+        }
+
+        /**
+         * Task 4: Create a JS program that finds the 10th char from entered Array.
+         * User enters a comma-separated string, which is then split into an array.
+         */
+        function findTenthChar() {
+            const input = document.getElementById('charArrayInput').value;
+            const charArray = input.split(',').map(char => char.trim()); // Trim whitespace
+
+            let result;
+            if (charArray.length >= 10) {
+                result = The 10th character is: '${charArray[9]}'; // Arrays are 0-indexed
+            } else {
+                result = The array has only ${charArray.length} elements. Cannot find the 10th character.;
+            }
+            document.getElementById('task4-result').innerText = result;
+        }
+
+        /**
+         * Task 5: Create a JS program to find the last element from the given array.
+         * User enters a comma-separated string, which is then split into an array.
+         */
+        function findLastElement() {
+            const input = document.getElementById('lastElementArrayInput').value;
+            const elementArray = input.split(',').map(item => item.trim()); // Trim whitespace
+
+            let result;
+            if (elementArray.length > 0) {
+                result = The last element is: '${elementArray[elementArray.length - 1]}';
+            } else {
+                result = 'The array is empty.';
+            }
+            document.getElementById('task5-result').innerText = result;
+        }
+
+        /**
+         * Task 6: Create popup that allows only 10 digits in text field.
+         * This uses a direct input event listener for real-time validation.
+         */
+        function validateTenDigits() {
+            const inputField = document.getElementById('tenDigitInput');
+            const resultDisplay = document.getElementById('task6-result');
+            const value = inputField.value.trim();
+
+            if (value.length === 10 && /^\d+$/.test(value)) {
+                resultDisplay.style.color = 'green';
+                resultDisplay.innerText = 'Valid: Exactly 10 digits entered!';
+            } else if (value.length > 0 && !/^\d+$/.test(value)) {
+                resultDisplay.style.color = 'red';
+                resultDisplay.innerText = 'Invalid: Only digits are allowed.';
+            }
+            else if (value.length > 10) {
+                 resultDisplay.style.color = 'red';
+                resultDisplay.innerText = 'Invalid: More than 10 digits entered.';
+            }
+            else if (value.length < 10 && value.length > 0) {
+                 resultDisplay.style.color = 'orange';
+                resultDisplay.innerText = Input has ${value.length} digits. Needs 10.;
+            }
+            else {
+                resultDisplay.innerText = 'Type to see validation message.';
+                resultDisplay.style.color = '#333';
+            }
+        }
+
+        /**
+         * Task 7: Program to find specific words in an array and find the repeated characters.
+         * User inputs an array of words and a specific word to search.
+         */
+        function analyzeWordsAndCharacters() {
+            const wordArrayInput = document.getElementById('wordArrayInput').value;
+            const searchWordInput = document.getElementById('searchWordInput').value;
+            const words = wordArrayInput.split(',').map(word => word.trim());
+            const searchWord = searchWordInput.trim();
+
+            let resultHtml = '';
+
+            // 1. Find specific words in the array
+            const foundIndices = [];
+            words.forEach((word, index) => {
+                if (word.toLowerCase() === searchWord.toLowerCase()) {
+                    foundIndices.push(index);
+                }
+            });
+
+            if (foundIndices.length > 0) {
+                resultHtml += <p class="font-bold">Searching for '${searchWord}':</p>;
+                resultHtml += <p>Found '${searchWord}' at indices: ${foundIndices.join(', ')}</p>;
+            } else {
+                resultHtml += <p> '${searchWord}' not found in the array.</p>;
+            }
+
+            // 2. Find repeated characters in the entire combined input string (or specific words)
+            // For simplicity, let's find repeated characters in the searchWord itself
+            if (searchWord.length > 0) {
+                const charCounts = {};
+                for (const char of searchWord.toLowerCase()) {
+                    charCounts[char] = (charCounts[char] || 0) + 1;
+                }
+
+                const repeatedChars = Object.entries(charCounts)
+                    .filter(([char, count]) => count > 1)
+                    .map(([char, count]) => '${char}' (${count} times));
+
+                if (repeatedChars.length > 0) {
+                    resultHtml += <p class="font-bold mt-4">Repeated characters in '${searchWord}':</p>;
+                    resultHtml += <p>${repeatedChars.join(', ')}</p>;
+                } else {
+                    resultHtml += <p class="mt-4">No repeated characters found in '${searchWord}'.</p>;
+                }
+            } else {
+                 resultHtml += <p class="mt-4">Please enter a word to analyze for repeated characters.</p>;
+            }
+
+
+            document.getElementById('task7-result').innerHTML = resultHtml;
+        }
+
+        /**
+         * Task 8: Program to find the number of vowels in an entered array of characters (or string).
+         * User inputs a comma-separated string of characters/words.
+         */
+        function countVowels() {
+            const input = document.getElementById('vowelArrayInput').value;
+            // Treat input as a single string for vowel counting, ignoring commas for this specific task's logic
+            const combinedString = input.replace(/[^a-zA-Z]/g, '').toLowerCase(); // Remove non-alphabetic, convert to lowercase
+            const vowels = ['a', 'e', 'i', 'o', 'u'];
+            let vowelCount = 0;
+            let foundVowels = [];
+
+            for (const char of combinedString) {
+                if (vowels.includes(char)) {
+                    vowelCount++;
+                    foundVowels.push(char);
+                }
+            }
+
+            let resultHtml = <p>Original Input (processed): "${combinedString}"</p>;
+            resultHtml += <p>Total number of vowels: <span class="font-bold text-blue-700">${vowelCount}</span></p>;
+            if (foundVowels.length > 0) {
+                 resultHtml += <p>Vowels found: ${foundVowels.join(', ')}</p>;
+            } else {
+                resultHtml += <p>No vowels found.</p>;
+            }
+
+
+            document.getElementById('task8-result').innerHTML = resultHtml;
+        }
+    </script>
+</body>
+</html>
